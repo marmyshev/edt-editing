@@ -14,6 +14,14 @@ Any way, developers may want to protect themselves or their juniors from acciden
 
 Disable Editing plugin allows to set up some rules to make read-only mode in all UI editors of 1C:EDT.
 
+
+## Install
+
+Select menu: `Help -> Install New Software...` past in p2-repository URL [https://marmyshev.gitlab.io/edt-editing/update](https://marmyshev.gitlab.io/edt-editing/update)
+
+Select installable feature `Disable Editing plugin for 1C:EDT`
+
+
 ## Main features
 
 Set up rules to **Disable** editing (read-only mode) in editors:
@@ -32,6 +40,7 @@ Also allows to set up  **Enable**  exceptions from disable rules:
 > Note! This plugin is not disable editing files via file system!
 
 **Attantion!**  All disabled object will be skipped from project validation by 1C:EDT.
+
 
 ## Set up your project rules
 
@@ -82,6 +91,13 @@ Open metadata objects to check out disabling and enabling features!
 В любом случае, разрабочики могут желать защитить себя или более молодых коллег от случайного редактирования некоторых объектов, которые они бы не хотели редактировать в процесс изучения больших Конфигураций.
 
 Плагин запрета редактирования позволяет настроить некоторые правила чтобы включить режим Только-просмотр во всех редакторах интерфейса 1C:EDT.
+
+
+## Установка
+
+Выбеите меню: `Help -> Install New Software...` вставьте адрес p2-репозитория [https://marmyshev.gitlab.io/edt-editing/update](https://marmyshev.gitlab.io/edt-editing/update)
+
+Выберите фичу для установки `Disable Editing plugin for 1C:EDT`
 
 
 ## Основные возможности
