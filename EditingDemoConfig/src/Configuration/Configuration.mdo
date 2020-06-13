@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Configuration xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e5f889a9-d8c1-4c57-b089-26599cd73965">
+  <name>EditingDemoConfig</name>
+  <synonym>
+    <key>en</key>
+    <value>Editing demo config</value>
+  </synonym>
+  <containedObjects classId="9cd510cd-abfc-11d4-9434-004095e12fc7" objectId="6b2d0c03-07e5-4582-a7f8-dff2c645f5e4"/>
+  <containedObjects classId="9fcd25a0-4822-11d4-9414-008048da11f9" objectId="b99c7950-4e90-4c8d-a0d3-005c81a702ee"/>
+  <containedObjects classId="e3687481-0a87-462c-a166-9f34594f9bba" objectId="032e1c18-d90b-4514-a522-1b7db4429bee"/>
+  <containedObjects classId="9de14907-ec23-4a07-96f0-85521cb6b53b" objectId="46cea3c9-e959-4f3e-a1a5-ba17d9e3a984"/>
+  <containedObjects classId="51f2d5d8-ea4d-4064-8892-82951750031e" objectId="499b54d1-b892-41b9-8a30-3717503ed13a"/>
+  <containedObjects classId="e68182ea-4237-4383-967f-90c1e3370bc7" objectId="3363176b-764f-4de9-b84f-14a854b5b010"/>
+  <configurationExtensionCompatibilityMode>8.3.15</configurationExtensionCompatibilityMode>
+  <defaultRunMode>ManagedApplication</defaultRunMode>
+  <usePurposes>PersonalComputer</usePurposes>
+  <defaultLanguage>Language.English</defaultLanguage>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <objectAutonumerationMode>NotAutoFree</objectAutonumerationMode>
+  <modalityUseMode>DontUse</modalityUseMode>
+  <synchronousPlatformExtensionAndAddInCallUseMode>DontUse</synchronousPlatformExtensionAndAddInCallUseMode>
+  <compatibilityMode>8.3.15</compatibilityMode>
+  <languages uuid="48d16d59-0ddd-4aef-af8a-6b25b86ce1f6">
+    <name>English</name>
+    <synonym>
+      <key>en</key>
+      <value>English</value>
+    </synonym>
+    <languageCode>en</languageCode>
+  </languages>
+  <subsystems>Subsystem.DisabledSubsystem</subsystems>
+  <subsystems>Subsystem.EnabledSubsystem</subsystems>
+  <commonModules>CommonModule.LockedOnlyModule</commonModules>
+  <catalogs>Catalog.Enabled</catalogs>
+  <catalogs>Catalog.Products</catalogs>
+  <catalogs>Catalog.Clients</catalogs>
+  <catalogs>Catalog.Suppliers</catalogs>
+</mdclass:Configuration>

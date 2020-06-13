@@ -1,0 +1,15 @@
+
+disable:
+   subsystem:
+     - DisabledSubsystem
+   path:
+     - src/CommonModules/LockedOnlyModule/Module.bsl
+   fullname:
+     - Catalog.Products.Form.ItemForm.Form
+     
+enable:
+  subsystem:
+    - EnabledSubsystem
+  path:
+    - src/Catalogs/Enabled
+

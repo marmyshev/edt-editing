@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.mard.dt.editing.feature"
+      label="%featureName"
+      version="0.1.0.qualifier"
+      provider-name="%vendor">
+
+   <description>
+      %description
+   </description>
+
+   <license url="https://www.eclipse.org/legal/epl-2.0/">
+      Eclipse Public License - v 2.0
+   </license>
+
+   <plugin
+         id="org.mard.dt.editing"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

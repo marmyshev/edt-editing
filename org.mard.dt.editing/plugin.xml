@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="com._1c.g5.v8.dt.core.modelEditingSupport">
+      <modelEditingProvider
+            class="org.mard.dt.editing.internal.ExecutableExtensionFactory:org.mard.dt.editing.internal.PathSettingsEditingSupportProvider">
+      </modelEditingProvider>
+   </extension>
+
+</plugin>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="b5838216-20a6-4671-be94-9711e1e395e7">
+  <producedTypes>
+    <objectType typeId="733f54a3-13cf-439d-b70c-0f68a674c094" valueTypeId="f068d005-838d-48e5-b98c-6a880cbe8708"/>
+    <refType typeId="f6d024f7-236d-4a05-b198-fe0194b609c4" valueTypeId="5ab4b56f-5eda-4725-9919-c59208e61a51"/>
+    <selectionType typeId="663c4792-ecf2-4523-9452-d80a40c9baf7" valueTypeId="5984f685-0111-4fa5-b67c-575986f6987d"/>
+    <listType typeId="63e52a50-61ec-4ed1-8492-71667dea64cb" valueTypeId="016885b1-de72-4113-95c2-38555e867e00"/>
+    <managerType typeId="113ea67d-d747-4146-9ac8-65be71e73791" valueTypeId="428fbafa-cdb3-4afd-8076-54df47c5387c"/>
+  </producedTypes>
+  <name>Products</name>
+  <synonym>
+    <key>en</key>
+    <value>Products</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.Products.StandardAttribute.Code</inputByString>
+  <inputByString>Catalog.Products.StandardAttribute.Description</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeLength>9</codeLength>
+  <descriptionLength>25</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <defaultObjectForm>Catalog.Products.Form.ItemForm</defaultObjectForm>
+  <defaultListForm>Catalog.Products.Form.ListForm</defaultListForm>
+  <attributes uuid="1d6336b5-360e-45f3-8327-ebb5ea02a546">
+    <name>SKU</name>
+    <synonym>
+      <key>en</key>
+      <value>SKU</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>25</length>
+      </stringQualifiers>
+    </type>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <forms uuid="958c4ec8-1086-451f-aa2f-20a6ea46dc8d">
+    <name>ItemForm</name>
+    <synonym>
+      <key>en</key>
+      <value>Item form</value>
+    </synonym>
+    <comment>Enabled to edit name of form, but form is disabled via full name in settings</comment>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+  <forms uuid="23bd220c-640f-492e-ba89-9e8c40569158">
+    <name>ListForm</name>
+    <synonym>
+      <key>en</key>
+      <value>List form</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:Catalog>

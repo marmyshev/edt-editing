@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="1dc03a43-b7cc-4332-87d3-dfa391aa7576">
+  <producedTypes>
+    <objectType typeId="a5645c2e-40b2-420a-b624-100e6f83b334" valueTypeId="ed5fe18a-adaa-4a2a-ad72-afb41450efee"/>
+    <refType typeId="6d4a8480-aeba-49e5-8d5c-719fbebed23b" valueTypeId="1e453d8c-cdbc-46df-904c-2bb0aa996278"/>
+    <selectionType typeId="e24c6838-00fd-46b9-92ba-98fac6273965" valueTypeId="d0063d80-b239-44f7-be09-5a202ff40453"/>
+    <listType typeId="33ae3e1f-1762-47b7-b671-665844cf453c" valueTypeId="0abce1f3-533c-478f-981a-9cb0c06d263e"/>
+    <managerType typeId="ba4f5a46-9f01-484a-abee-2c0fed7c61c6" valueTypeId="bf8940db-0bb9-4cec-a391-c16cd87344e6"/>
+  </producedTypes>
+  <name>Suppliers</name>
+  <synonym>
+    <key>en</key>
+    <value>Suppliers</value>
+  </synonym>
+  <comment>Disabled via settings by  subsystem</comment>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.Suppliers.StandardAttribute.Code</inputByString>
+  <inputByString>Catalog.Suppliers.StandardAttribute.Description</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeLength>9</codeLength>
+  <descriptionLength>25</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+</mdclass:Catalog>
