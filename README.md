@@ -4,7 +4,7 @@
 
 > Русское описание идет после английского
 
-Plugin for 1C:Enterprise Development Tools allows to disable editing of any 1C metadata object in UI editors with reach settings.
+Plugin for 1C:Enterprise Development Tools allows to disable editing of any 1C metadata objects in UI editors with reach settings.
 
 Historically developers used supplier's settings to enable editing of some metadata objects and the rest of objects keep disabled (aka supplied by Configuration vendor).
 
