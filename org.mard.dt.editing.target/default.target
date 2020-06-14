@@ -3,7 +3,7 @@
 <target name="default">
 	<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-			<repository id="dt_repository" location="https://edt.1c.ru/releases/sapphire/2020.3/"/>
+			<repository id="dt_repository" location="https://edt.1c.ru/releases/sapphire/2020.4/"/>
 			<unit id="com._1c.g5.aef.feature.feature.group" version="0.0.0"/>
 			<unit id="com._1c.g5.commons.feature.group" version="0.0.0"/>
 			<unit id="com._1c.g5.edt.license.feature.group" version="0.0.0"/>
@@ -31,7 +31,6 @@
 			<unit id="com._1c.g5.v8.dt.platform.support_v8.3.12.feature.feature.group" version="0.0.0"/>
 			<unit id="com._1c.g5.v8.dt.platform.support_v8.3.13.feature.feature.group" version="0.0.0"/>
 			<unit id="com._1c.g5.v8.dt.platform.support_v8.3.14.feature.feature.group" version="0.0.0"/>
-			<unit id="com._1c.g5.v8.dt.platform.support_v8.3.15.feature.feature.group" version="0.0.0"/>
 			<unit id="com._1c.g5.v8.dt.platform.support_v8.3.8.feature.feature.group" version="0.0.0"/>
 			<unit id="com._1c.g5.v8.dt.platform.support_v8.3.9.feature.feature.group" version="0.0.0"/>
 			<unit id="com._1c.g5.v8.dt.product.docs.feature.feature.group" version="0.0.0"/>
