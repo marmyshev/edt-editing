@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.mard.dt.editing;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: org.mard.dt.editing.internal.CorePlugin
 Bundle-Vendor: %vendor
 Bundle-Localization: plugin
@@ -16,7 +16,7 @@ Bundle-ActivationPolicy: lazy
 Import-Package: com._1c.g5.v8.bm.core;version="[7.0.0,8.0.0)",
  com._1c.g5.v8.bm.integration;version="[7.0.0,10.0.0)",
  com._1c.g5.v8.dt.core.filesystem;version="[4.0.0,6.0.0)",
- com._1c.g5.v8.dt.core.model;version="[5.2.0,6.0.0)",
+ com._1c.g5.v8.dt.core.model;version="[6.0.0,7.0.0)",
  com._1c.g5.v8.dt.core.platform;version="[9.0.0,11.0.0)",
  com._1c.g5.v8.dt.metadata.mdclass;version="[8.0.0,9.0.0)",
  com.google.common.cache;version="[15.0.0,22.0.0)",

@@ -21,6 +21,7 @@ Disable Editing plugin allows to set up some rules to make read-only mode in all
 | Plugin Version | 1C:EDT version |
 |----------------|----------------|
 | 0.1.0 | 2020.1 - 2020.4 |
+| 0.2.0 | 2020.5 |
 
 
 [![Drag to your running 1C:EDT* workspace. *Requires Eclipse Marketplace Client](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=5141319 "Drag to your running 1C:EDT* workspace. *Requires Eclipse Marketplace Client")
@@ -108,6 +109,7 @@ Open metadata objects to check out disabling and enabling features!
 | Версия плагина | Версия 1C:EDT |
 |----------------|---------------|
 | 0.1.0 | 2020.1 - 2020.4 |
+| 0.2.0 | 2020.5 |
 
 
 [![Перетяните это в *запущенный воркспейс EDT*. Требуется клиент Маркетплейс Эклипса](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=5141319 "Перетяните это в *запущенный воркспейс EDT*. Требуется клиент Маркетплейс Эклипса")
