@@ -29,7 +29,7 @@ public class PathSettingsEditingSupportProvider implements IModelEditingSupportP
 	public boolean canEdit(EObject eObject, EditingMode mode) {
 
 		if (mode != EditingMode.DIRECT)
-			return false;
+			return true;
 		
 		if (eObject instanceof IBmObject) {
 			IBmEngine engine = ((IBmObject) eObject).bmGetEngine();
