@@ -22,7 +22,7 @@ public class PathSettingsEditingSupportProvider implements IModelEditingSupportP
 
 	@Override
 	public boolean canDelete(EObject object, EditingMode mode) {
-		return mode == EditingMode.DIRECT;
+		return true;
 	}
 
 	@Override
