@@ -4,15 +4,15 @@
 
 > Русское описание идет после английского
 
-Plugin for 1C:Enterprise Development Tools allows to disable editing of any 1C metadata objects in UI editors with reach settings.
+Plugin for 1C:Enterprise Development Tools disables editing of 1C metadata objects in UI editors. Reach settings of blocked objects.
 
 Historically developers used supplier's settings to enable editing of some metadata objects and the rest of objects keep disabled (aka supplied by Configuration vendor).
 
-New IDE, called 1C:EDT, now allows develop application more flexible and use git for supplier-master branch workflow, initial supplier's settings now can be still used but give more tricks than more help, so most developers just remove them from repository.
+In new IDE 1C:EDT application develops more flexible and uses git for supplier-master branch workflow, initial supplier's settings now can be still used but give more tricks than more help. So most developers remove them from repository.
 
-Any way, developers may want to protect themselves or their juniors from accidental editing some object that they didn't want to edit while exploring reach Configurations.
+Developers want to protect themselves or their juniors from accidental editing some object that they didn't want to edit while exploring reach Configurations.
 
-Disable Editing plugin allows to set up some rules to make read-only mode in all UI editors of 1C:EDT.
+Disable Editing plugin developer set up some rules to make read-only mode in UI editors of 1C:EDT.
 
 
 ## Install
@@ -40,16 +40,16 @@ Set up rules to **Disable** editing (read-only mode) in editors:
 - specify project relative full path or folders which content is disabled to edit
 - specify full qualified names of 1C:Enterprise metadata objects (that stores in single file) that should be disabled in editors
 
-Also allows to set up  **Enable**  exceptions from disable rules:
+Set up rules to **Enable** as exceptions from disable rules:
 
 - by subsystem
 - by project relative path to file or to folder
 - by full qualified name
 
 
-> Note! This plugin is not disable editing files via file system!
+> Note! This plugin does not disables editing files via file system!
 
-**Attantion!**  All disabled object will be skipped from project validation by 1C:EDT.
+**Attantion!**  Disabled object will be skipped from project validation by 1C:EDT.
 
 
 ## Set up your project rules
@@ -92,15 +92,15 @@ Open metadata objects to check out disabling and enabling features!
 
 # Плагин запрета редактирования для 1C:EDT
 
-Плагин для 1C:Enterprise Development Tools позволяет заблокировать редактирование любого объекта метаданных 1С в редактора в интерфейсе с широкими настройками.
+Плагин для 1C:Enterprise Development Tools блокирует редактирование объектов метаданных 1С в редакторах в интерфейсе. Гибкие настройки блокируемых объектов.
 
 Исторически, разработчики использовали настройки поддержки поставщика чтобы разрешить редактирование некоторых объектов метаданных, а остальные объекты оставить заблокированными (типа на поддержке поставщика Конфигурации).
 
-Новая IDE, называема 1C:EDT теперь позволяет разрабатывать приложения более гибко в т.ч. используя Git для процесса ветвления supplier-master, начальные настройки поставки можно при этом использовать, но они добавляют сложности больше чем помощи. Поэтому большинство разработчиков просто удаляют их из репозитория.
+В новой IDE 1C:EDT  приложения разрабатываются гибче, в т.ч. используя Git для ветвления supplier-master, начальные настройки поставки можно при этом использовать, но добавляют сложности больше чем помощи. Поэтому большинство разработчиков  удаляют настройки из репозитория.
 
-В любом случае, разрабочики могут желать защитить себя или более молодых коллег от случайного редактирования некоторых объектов, которые они бы не хотели редактировать в процесс изучения больших Конфигураций.
+Разрабочики желают защитить себя или более молодых коллег от случайного редактирования некоторых объектов, которые бы не хотели редактировать в процессе изучения больших Конфигураций.
 
-Плагин запрета редактирования позволяет настроить некоторые правила чтобы включить режим Только-просмотр во всех редакторах интерфейса 1C:EDT.
+В Плагине запрета редактирования разработчик настраивает некоторые правила, чтобы включить режим Только-просмотр в редакторах интерфейса 1C:EDT.
 
 
 ## Установка
@@ -128,16 +128,16 @@ Open metadata objects to check out disabling and enabling features!
 - Указание относительно проекта полного пути к файлу или к  каталогу, контент которых заблокирован для редактирования
 - Указание полного квалифицированного имени метаданного 1С:Предприятия (хранящиеся в отдельных файлах), которые должны быть заблокированы в редакторах
 
-Так же позволяет настроить правила исключения ( **Enable** )  для разрешения редактирования:
+Настройка правила исключения ( **Enable** )  для разрешения редактирования:
 
 - по подсистеме
 - по пути к файлу или каталогу относительно проекта
 - по полному квалифицированному имени
 
 
-> Примечание! Этот плагин не позволяет заблокировать редактирование файлов через файловую систему!
+> Примечание! Этот плагин не  блокирует редактирование файлов через файловую систему!
 
-**Внимание!**  Все заблокированные объекты будут исключены из проверки (валидации) по проекту в 1C:EDT.
+**Внимание!**  Заблокированные объекты будут исключены из проверки (валидации) по проекту в 1C:EDT.
 
 
 ##  Настройка правил по проекту
@@ -147,7 +147,7 @@ Open metadata objects to check out disabling and enabling features!
 
 
 ```yaml
-# секция позволяет заблокировать редактирование в UI
+# секция блокирирует редактирование в UI
 disable:
    # Список подсистем, состав объектов которых должен быть заблокирован
    subsystem:
@@ -161,7 +161,7 @@ disable:
    fullname:
      - Catalog.Products.Form.ItemForm.Form
      
-# секция позволяет сделать исключения из правил блокировки
+# секция добавляет исключения из правил блокировки
 enable:
   subsystem:
     - EnabledSubsystem
@@ -177,5 +177,5 @@ enable:
 
 [Демо настройки здесь](EditingDemoConfig/.settings/editing.yml).
 
-Откройте объекты метаданных чтобы исследовать функциональность блокировки и разрешения!
+Откройте объекты метаданных, чтобы исследовать функциональность блокировки и разрешения!
 
