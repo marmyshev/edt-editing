@@ -58,6 +58,8 @@ public class ProjectPathEditingService {
 
 	public boolean canEdit(IProject project, EObject eObject) {
 
+		if (eObject == null || eObject.eIsProxy())
+			return true;
 		URI uri = EcoreUtil.getURI(eObject);
 		if (uri == null)
 			return true;
