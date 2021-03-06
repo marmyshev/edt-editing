@@ -39,6 +39,16 @@ import com.google.inject.Singleton;
 @Singleton
 public class ProjectPathEditingService {
 
+    /**
+     * Gets the singleton shared instance of {@link ProjectPathEditingService}
+     *
+     * @return single instance of ProjectPathEditingService
+     */
+    public static ProjectPathEditingService getInstance()
+    {
+        return CorePlugin.getDefault().getInjector().getInstance(ProjectPathEditingService.class);
+    }
+
 	private static final int TOP_OBJECT_FIRST_SEGMENTS = 3;
 
 	private static final IPath SETTING_FILE_PATH = new Path(".settings/editing.yml"); //$NON-NLS-1$

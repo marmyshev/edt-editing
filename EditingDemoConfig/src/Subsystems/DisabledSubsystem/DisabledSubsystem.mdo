@@ -9,4 +9,5 @@
   <content>Catalog.Enabled</content>
   <content>Catalog.Clients</content>
   <content>Catalog.Suppliers</content>
+  <content>CommonModule.Locked</content>
 </mdclass:Subsystem>

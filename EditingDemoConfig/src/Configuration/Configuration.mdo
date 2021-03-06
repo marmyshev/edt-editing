@@ -31,6 +31,7 @@
   <subsystems>Subsystem.DisabledSubsystem</subsystems>
   <subsystems>Subsystem.EnabledSubsystem</subsystems>
   <commonModules>CommonModule.LockedOnlyModule</commonModules>
+  <commonModules>CommonModule.Locked</commonModules>
   <catalogs>Catalog.Enabled</catalogs>
   <catalogs>Catalog.Products</catalogs>
   <catalogs>Catalog.Clients</catalogs>
