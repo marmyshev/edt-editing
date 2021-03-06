@@ -3,8 +3,5 @@
    <feature id="org.mard.dt.editing.feature">
       <category name="org.mard.dt.editing.public"/>
    </feature>
-   <feature id="org.mard.dt.editing.feature.source">
-      <category name="org.mard.dt.editing.public"/>
-   </feature>
    <category-def name="org.mard.dt.editing.public" label="1C:EDT Plugins"/>
 </site>
