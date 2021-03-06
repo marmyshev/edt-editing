@@ -4,6 +4,7 @@
    <extension
          point="org.eclipse.ui.decorators">
       <decorator
+            adaptable="true"
             class="org.mard.dt.editing.internal.ui.ExecutableExtensionFactory:org.mard.dt.editing.ui.decorators.DisableEditing"
             id="org.mard.dt.editing.ui.decorators.DisableEditing"
             label="%decorator.label"
