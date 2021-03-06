@@ -19,6 +19,9 @@
                 </objectClass>
              </or>
          </enablement>
+         <description>
+            %decorator.description
+         </description>
       </decorator>
    </extension>
 
