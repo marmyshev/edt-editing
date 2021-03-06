@@ -1,12 +1,18 @@
-
+# section allows to disable editing in UI
 disable:
-   subsystem:
-     - DisabledSubsystem
-   path:
-     - src/CommonModules/LockedOnlyModule/Module.bsl
-   fullname:
-     - Catalog.Products.Form.ItemForm.Form
-     
+  # List of subsystems which content should be disabled
+  subsystem:
+    - DisabledSubsystem
+  
+  # List of project relative path to file or to folder 
+  path:
+    - src/CommonModules/LockedOnlyModule/Module.bsl
+   
+  # Full qualified  name of top objects (resources)
+  fullname:
+    - Catalog.Products.Form.ItemForm.Form
+
+# section allows to make some exceptions from disable rule
 enable:
   subsystem:
     - EnabledSubsystem
