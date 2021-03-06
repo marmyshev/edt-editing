@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mard.dt.editing</groupId>
 	<artifactId>build</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<name>Disable Editing plugin for 1C:EDT</name>
 	<packaging>pom</packaging>
 
@@ -18,8 +18,8 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<maven.compiler.release>11</maven.compiler.release>
-		<tycho.version>1.5.0</tycho.version>
-		<tycho.extras.version>1.5.0</tycho.extras.version>
+		<tycho.version>2.2.0</tycho.version>
+		<tycho.extras.version>2.2.0</tycho.extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
@@ -143,7 +143,7 @@
 						<artifact>
 							<groupId>org.mard.dt.editing.target</groupId>
 							<artifactId>default</artifactId>
-							<version>0.2.0-SNAPSHOT</version>
+							<version>0.3.0-SNAPSHOT</version>
 						</artifact>
 					</target>
 					<environments>
@@ -261,17 +261,6 @@
 						<repositoryName>Disable Editing plugin ${qualifier}</repositoryName>
 						<compress>false</compress>
 						<xzCompress>false</xzCompress>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.eclipse.tycho.extras</groupId>
-					<artifactId>tycho-source-feature-plugin</artifactId>
-					<version>${tycho.extras.version}</version>
-					<configuration>
-						<includeBinaryFeature>false</includeBinaryFeature>
-						<archive>
-							<addMavenDescriptor>false</addMavenDescriptor>
-						</archive>
 					</configuration>
 				</plugin>
 				<plugin>
