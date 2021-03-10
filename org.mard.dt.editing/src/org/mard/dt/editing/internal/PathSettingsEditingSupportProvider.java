@@ -12,37 +12,41 @@ import com._1c.g5.v8.dt.core.model.IModelEditingSupportProvider;
 import com._1c.g5.v8.dt.core.platform.IResourceLookup;
 import com.google.inject.Inject;
 
-public class PathSettingsEditingSupportProvider implements IModelEditingSupportProvider {
+public class PathSettingsEditingSupportProvider
+    implements IModelEditingSupportProvider
+{
 
-	@Inject
-	private IResourceLookup resourceLookup;
+    @Inject
+    private IResourceLookup resourceLookup;
 
-	@Inject
-	private ProjectPathEditingService editingService;
+    @Inject
+    private ProjectPathEditingService editingService;
 
-	@Override
-	public boolean canDelete(EObject object, EditingMode mode) {
-		return true;
-	}
+    @Override
+    public boolean canDelete(EObject object, EditingMode mode)
+    {
+        return true;
+    }
 
-	@Override
-	public boolean canEdit(EObject eObject, EditingMode mode) {
+    @Override
+    public boolean canEdit(EObject eObject, EditingMode mode)
+    {
 
-		if (mode != EditingMode.DIRECT)
-			return true;
-		
-		if (eObject instanceof IBmObject) {
-			IBmEngine engine = ((IBmObject) eObject).bmGetEngine();
-			if (engine != null && engine.getState() != EngineState.RUNNING) {
-				return true;
-			}
-		}
+        if (mode != EditingMode.DIRECT)
+            return true;
 
-		IProject project = resourceLookup.getProject(eObject);
-		if (project != null) {
-			return editingService.canEdit(project, eObject);
-		}
-		return true;
-	}
+        if (eObject instanceof IBmObject)
+        {
+            IBmEngine engine = ((IBmObject)eObject).bmGetEngine();
+            if (engine != null && engine.getState() != EngineState.RUNNING)
+            {
+                return true;
+            }
+        }
+
+        IProject project = resourceLookup.getProject(eObject);
+
+        return editingService.canEdit(project, eObject);
+    }
 
 }

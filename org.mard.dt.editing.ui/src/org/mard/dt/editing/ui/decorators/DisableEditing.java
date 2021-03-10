@@ -35,7 +35,6 @@ public class DisableEditing
     @Inject
     private IResourceLookup resourceLookup;
 
-
     /** The icon image location in the project folder */
     private String iconPath = "icons/ovr16/disable_editing.png"; //NON-NLS-1 //$NON-NLS-1$
 
