@@ -12,7 +12,7 @@
     <key>en</key>
     <value>Suppliers</value>
   </synonym>
-  <comment>Disabled via settings by  subsystem</comment>
+  <comment>Disabled via settings by subsystem</comment>
   <useStandardCommands>true</useStandardCommands>
   <inputByString>Catalog.Suppliers.StandardAttribute.Code</inputByString>
   <inputByString>Catalog.Suppliers.StandardAttribute.Description</inputByString>
