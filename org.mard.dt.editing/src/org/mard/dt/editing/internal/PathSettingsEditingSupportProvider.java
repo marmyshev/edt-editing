@@ -2,7 +2,7 @@ package org.mard.dt.editing.internal;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.EObject;
-import org.mard.dt.editing.ProjectPathEditingService;
+import org.mard.dt.editing.IPathEditingService;
 
 import com._1c.g5.v8.bm.core.EngineState;
 import com._1c.g5.v8.bm.core.IBmEngine;
@@ -20,7 +20,7 @@ public class PathSettingsEditingSupportProvider
     private IResourceLookup resourceLookup;
 
     @Inject
-    private ProjectPathEditingService editingService;
+    private IPathEditingService editingService;
 
     @Override
     public boolean canDelete(EObject object, EditingMode mode)
@@ -45,6 +45,8 @@ public class PathSettingsEditingSupportProvider
         }
 
         IProject project = resourceLookup.getProject(eObject);
+        if(project == null)
+            return true;
 
         return editingService.canEdit(project, eObject);
     }

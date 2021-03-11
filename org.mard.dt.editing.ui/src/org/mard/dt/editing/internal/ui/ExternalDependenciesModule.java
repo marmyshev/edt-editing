@@ -1,6 +1,7 @@
 package org.mard.dt.editing.internal.ui;
 
 import org.eclipse.core.runtime.Plugin;
+import org.mard.dt.editing.IPathEditingService;
 
 import com._1c.g5.v8.dt.core.platform.IResourceLookup;
 import com._1c.g5.wiring.AbstractServiceAwareModule;
@@ -18,6 +19,7 @@ public class ExternalDependenciesModule
     protected void doConfigure()
     {
         bind(IResourceLookup.class).toService();
+        bind(IPathEditingService.class).toService();
     }
 
 }
