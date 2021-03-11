@@ -12,7 +12,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.mard.dt.editing.ProjectPathEditingService;
+import org.mard.dt.editing.IPathEditingService;
 import org.mard.dt.editing.internal.ui.UiPlugin;
 
 import com._1c.g5.v8.dt.core.platform.IResourceLookup;
@@ -30,7 +30,8 @@ public class DisableEditing
     extends LabelProvider
     implements ILightweightLabelDecorator
 {
-    private final ProjectPathEditingService editingService = ProjectPathEditingService.getInstance();
+    @Inject
+    private IPathEditingService editingService;
 
     @Inject
     private IResourceLookup resourceLookup;
@@ -54,14 +55,17 @@ public class DisableEditing
         if (element instanceof IResource)
         {
             IResource resource = (IResource)element;
-            canEdit = editingService.canEdit(resource.getProject(), resource.getProjectRelativePath());
+            IProject project = resource.getProject();
+            if (project != null)
+                canEdit = editingService.canEdit(project, resource.getProjectRelativePath());
         }
         else if (element instanceof EObject)
         {
             EObject eObject = (EObject)element;
             IProject project = resourceLookup.getProject(eObject);
 
-            canEdit = editingService.canEdit(project, eObject);
+            if (project != null)
+                canEdit = editingService.canEdit(project, eObject);
         }
 
         if (!canEdit && getDescriptor() != null)

@@ -1,4 +1,4 @@
-package org.mard.dt.editing;
+package org.mard.dt.editing.internal;
 
 import static com._1c.g5.v8.dt.metadata.mdclass.MdClassPackage.Literals.SUBSYSTEM;
 
@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -14,13 +15,21 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.mard.dt.editing.internal.CorePlugin;
+import org.mard.dt.editing.EditingSettings;
+import org.mard.dt.editing.EditingSettingsContent;
+import org.mard.dt.editing.EditingSettingsYamlReader;
+import org.mard.dt.editing.IPathEditingService;
 
 import com._1c.g5.v8.bm.core.IBmObject;
 import com._1c.g5.v8.bm.core.IBmTransaction;
@@ -28,7 +37,12 @@ import com._1c.g5.v8.bm.integration.AbstractBmTask;
 import com._1c.g5.v8.bm.integration.IBmModel;
 import com._1c.g5.v8.dt.core.filesystem.IProjectFileSystemSupport;
 import com._1c.g5.v8.dt.core.filesystem.IProjectFileSystemSupportProvider;
+import com._1c.g5.v8.dt.core.lifecycle.ProjectContext;
 import com._1c.g5.v8.dt.core.platform.IBmModelManager;
+import com._1c.g5.v8.dt.core.platform.IDtProject;
+import com._1c.g5.v8.dt.lifecycle.LifecycleParticipant;
+import com._1c.g5.v8.dt.lifecycle.LifecyclePhase;
+import com._1c.g5.v8.dt.lifecycle.LifecycleService;
 import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 import com._1c.g5.v8.dt.metadata.mdclass.Subsystem;
 import com.google.common.cache.Cache;
@@ -36,29 +50,25 @@ import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+@LifecycleService(name = "ProjectPathEditingService")
 @Singleton
 public class ProjectPathEditingService
+    implements IPathEditingService
 {
 
     private static final int TOP_OBJECT_FIRST_SEGMENTS = 3;
 
     private static final IPath SETTING_FILE_PATH = new Path(".settings/editing.yml"); //$NON-NLS-1$
 
-    /**
-     * Gets the singleton shared instance of {@link ProjectPathEditingService}
-     *
-     * @return single instance of ProjectPathEditingService
-     */
-    public static ProjectPathEditingService getInstance()
-    {
-        return CorePlugin.getDefault().getInjector().getInstance(ProjectPathEditingService.class);
-    }
+    private static final IPath SUBSYSTEM_PATH = new Path("src/Subsystems"); //$NON-NLS-1$
 
     private final IProjectFileSystemSupportProvider fileSystemSupportProvider;
 
     private final IBmModelManager modelManager;
 
     private final Map<IProject, ProjectCache> projects = new ConcurrentHashMap<>();
+
+    private final IResourceChangeListener resourceListener = new ResourceChangeListener();
 
     @Inject
     public ProjectPathEditingService(IProjectFileSystemSupportProvider fileSystemSupportProvider,
@@ -68,6 +78,57 @@ public class ProjectPathEditingService
         this.modelManager = modelManager;
     }
 
+    @Override
+    public void activate()
+    {
+        ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceListener);
+    }
+
+    @Override
+    public void deactivate()
+    {
+        ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceListener);
+    }
+
+    /**
+     * Initializes the extension.
+     *
+     * @param projectContext The project context that is being started
+     */
+    @LifecycleParticipant(phase = LifecyclePhase.INITIALIZATION)
+    public void init(ProjectContext projectContext)
+    {
+        IDtProject dtProject = projectContext.getProject();
+        IProject project = dtProject.getWorkspaceProject();
+
+        if (project != null)
+        {
+            dispose(project);
+        }
+    }
+
+    @LifecycleParticipant(phase = LifecyclePhase.DISPOSING)
+    public void dispose(ProjectContext lifecycleContext)
+    {
+        IDtProject dtProject = lifecycleContext.getProject();
+        IProject project = dtProject.getWorkspaceProject();
+
+        if (project != null)
+        {
+            dispose(project);
+        }
+    }
+
+    private void dispose(IProject project)
+    {
+        ProjectCache cache = projects.remove(project);
+        if (cache != null)
+        {
+            cache.uriCache.cleanUp();
+        }
+    }
+
+    @Override
     public boolean canEdit(IProject project, EObject eObject)
     {
 
@@ -106,6 +167,7 @@ public class ProjectPathEditingService
         return true;
     }
 
+    @Override
     public boolean canEdit(IProject project, IPath path)
     {
 
@@ -163,64 +225,89 @@ public class ProjectPathEditingService
         IProjectFileSystemSupport fileSystemSupport)
     {
 
-        model.executeReadonlyTask(new AbstractBmTask<Void>("Read paths by fullname") //$NON-NLS-1$
+        IBmTransaction transaction = model.getEngine().getCurrentTransaction();
+        if (transaction != null)
         {
-
-            @Override
-            public Void execute(IBmTransaction transaction, IProgressMonitor monitor)
+            addFullnamePath(paths, fullnames, fileSystemSupport, transaction);
+        }
+        else
+        {
+            model.executeReadonlyTask(new AbstractBmTask<Void>("Read paths by fullname") //$NON-NLS-1$
             {
-
-                for (String fullname : fullnames)
+                @Override
+                public Void execute(IBmTransaction transaction, IProgressMonitor monitor)
                 {
 
-                    IBmObject top = transaction.getTopObjectByFqn(fullname);
-                    if (top != null)
-                    {
-                        IPath path = fileSystemSupport.getPath(top);
-                        if (path != null)
-                        {
-                            paths.add(path);
-                        }
-                    }
+                    addFullnamePath(paths, fullnames, fileSystemSupport, transaction);
+                    return null;
                 }
-                return null;
+            });
+        }
+    }
+
+    private void addFullnamePath(Set<IPath> paths, List<String> fullnames, IProjectFileSystemSupport fileSystemSupport,
+        IBmTransaction transaction)
+    {
+        for (String fullname : fullnames)
+        {
+
+            IBmObject top = transaction.getTopObjectByFqn(fullname);
+            if (top != null)
+            {
+                IPath path = fileSystemSupport.getPath(top);
+                if (path != null)
+                {
+                    paths.add(path);
+                }
             }
-        });
+        }
     }
 
     private void addSubsystemPath(Set<IPath> paths, List<String> subsystems, IBmModel model,
         IProjectFileSystemSupport fileSystemSupport)
     {
 
-        model.executeReadonlyTask(new AbstractBmTask<Void>("Read subsystem content paths") //$NON-NLS-1$
+        IBmTransaction transaction = model.getEngine().getCurrentTransaction();
+        if (transaction != null)
         {
-
-            @Override
-            public Void execute(IBmTransaction transaction, IProgressMonitor monitor)
+            addSubsystemPath(paths, subsystems, fileSystemSupport, transaction);
+        }
+        else
+        {
+            model.executeReadonlyTask(new AbstractBmTask<Void>("Read subsystem content paths") //$NON-NLS-1$
             {
-
-                String preffix = SUBSYSTEM.getName();
-                for (String subsystemName : subsystems)
+                @Override
+                public Void execute(IBmTransaction transaction, IProgressMonitor monitor)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    String[] segments = subsystemName.trim().split("\\."); //$NON-NLS-1$
-                    for (int i = 0; i < segments.length; i++)
-                    {
-                        String segment = segments[i];
-                        sb.append(preffix);
-                        sb.append("."); //$NON-NLS-1$
-                        sb.append(segment);
-                    }
-
-                    IBmObject subsystem = transaction.getTopObjectByFqn(sb.toString());
-                    if (subsystem instanceof Subsystem)
-                    {
-                        addSubsystemPath((Subsystem)subsystem, paths, fileSystemSupport);
-                    }
+                    addSubsystemPath(paths, subsystems, fileSystemSupport, transaction);
+                    return null;
                 }
-                return null;
+            });
+        }
+    }
+
+    private void addSubsystemPath(Set<IPath> paths, List<String> subsystems,
+        IProjectFileSystemSupport fileSystemSupport, IBmTransaction transaction)
+    {
+        String preffix = SUBSYSTEM.getName();
+        for (String subsystemName : subsystems)
+        {
+            StringBuilder sb = new StringBuilder();
+            String[] segments = subsystemName.trim().split("\\."); //$NON-NLS-1$
+            for (int i = 0; i < segments.length; i++)
+            {
+                String segment = segments[i];
+                sb.append(preffix);
+                sb.append("."); //$NON-NLS-1$
+                sb.append(segment);
             }
-        });
+
+            IBmObject subsystem = transaction.getTopObjectByFqn(sb.toString());
+            if (subsystem instanceof Subsystem)
+            {
+                addSubsystemPath((Subsystem)subsystem, paths, fileSystemSupport);
+            }
+        }
     }
 
     private void addSubsystemPath(Subsystem subsystem, Set<IPath> paths, IProjectFileSystemSupport fileSystemSupport)
@@ -358,4 +445,43 @@ public class ProjectPathEditingService
         }
 
     }
+
+    private class ResourceChangeListener
+        implements IResourceChangeListener
+    {
+
+        @Override
+        public void resourceChanged(IResourceChangeEvent event)
+        {
+            IResource res = event.getResource();
+
+            if (event.getType() == IResourceChangeEvent.PRE_CLOSE || event.getType() == IResourceChangeEvent.PRE_DELETE)
+            {
+                if (res instanceof IProject)
+                {
+                    dispose((IProject)res);
+                }
+            }
+            else if (event.getType() == IResourceChangeEvent.POST_CHANGE)
+            {
+                IResourceDelta delta = event.getDelta();
+                if (delta != null)
+                {
+                    for (Iterator<Entry<IProject, ProjectCache>> iterator = projects.entrySet().iterator(); iterator
+                        .hasNext();)
+                    {
+                        Entry<IProject, ProjectCache> entry = iterator.next();
+                        IPath path = entry.getKey().getFullPath();
+                        IResourceDelta projectDelta = delta.findMember(path.append(SETTING_FILE_PATH));
+                        if (projectDelta != null
+                            || (projectDelta = delta.findMember(path.append(SUBSYSTEM_PATH))) != null)
+                        {
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
