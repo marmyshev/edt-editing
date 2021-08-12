@@ -95,7 +95,7 @@ public class ProjectPathEditingService
      *
      * @param projectContext The project context that is being started
      */
-    @LifecycleParticipant(phase = LifecyclePhase.INITIALIZATION)
+    @LifecycleParticipant(phase = LifecyclePhase.RESOURCE_LOADING, dependsOn = IBmModelManager.SERVICE_NAME)
     public void init(ProjectContext projectContext)
     {
         IDtProject dtProject = projectContext.getProject();
@@ -367,26 +367,28 @@ public class ProjectPathEditingService
         Set<IPath> enable = new ConcurrentSkipListSet<>(comparator);
 
         EditingSettings settings = loadEditingSettings(project);
-        if (settings != null)
+        if (settings == null)
         {
+            return new ProjectCache(disable, enable);
+        }
 
-            if (settings.getDisable() != null)
-                addAllPath(project, settings.getDisable(), disable);
+        if (settings.getDisable() != null)
+            addAllPath(project, settings.getDisable(), disable);
 
-            if (!disable.isEmpty() && settings.getEnable() != null)
-                addAllPath(project, settings.getEnable(), enable);
+        if (!disable.isEmpty() && settings.getEnable() != null)
+            addAllPath(project, settings.getEnable(), enable);
 
-            // Remove disable path if there is higher enable (permissive) path
-            for (IPath path : enable)
+        // Remove disable path if there is higher enable (permissive) path
+        for (IPath path : enable)
+        {
+            for (Iterator<IPath> iterator = disable.iterator(); iterator.hasNext();)
             {
-                for (Iterator<IPath> iterator = disable.iterator(); iterator.hasNext();)
-                {
-                    IPath iPath = iterator.next();
-                    if (path.isPrefixOf(iPath))
-                        iterator.remove();
-                }
+                IPath iPath = iterator.next();
+                if (path.isPrefixOf(iPath))
+                    iterator.remove();
             }
         }
+
         return new ProjectCache(disable, enable);
     }
 
