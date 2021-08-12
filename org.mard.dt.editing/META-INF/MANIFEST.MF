@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.15.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.18.0,3.0.0)",
  org.eclipse.core.resources;bundle-version="[3.13.0,4.0.0)",
  com._1c.g5.wiring;bundle-version="[2.2.0,3.0.0)",
- org.eclipse.jgit;bundle-version="[5.10.0,6.0.0)"
+ org.eclipse.jgit;bundle-version="[5.0.0,6.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.mard.dt.editing
 Bundle-ActivationPolicy: lazy
