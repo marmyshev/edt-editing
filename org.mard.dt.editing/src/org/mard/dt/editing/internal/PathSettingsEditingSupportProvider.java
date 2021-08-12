@@ -16,11 +16,16 @@ public class PathSettingsEditingSupportProvider
     implements IModelEditingSupportProvider
 {
 
-    @Inject
-    private IResourceLookup resourceLookup;
+    private final IResourceLookup resourceLookup;
+
+    private final IPathEditingService editingService;
 
     @Inject
-    private IPathEditingService editingService;
+    public PathSettingsEditingSupportProvider(IResourceLookup resourceLookup, IPathEditingService editingService)
+    {
+        this.resourceLookup = resourceLookup;
+        this.editingService = editingService;
+    }
 
     @Override
     public boolean canDelete(EObject object, EditingMode mode)
@@ -45,7 +50,7 @@ public class PathSettingsEditingSupportProvider
         }
 
         IProject project = resourceLookup.getProject(eObject);
-        if(project == null)
+        if (project == null)
             return true;
 
         return editingService.canEdit(project, eObject);
