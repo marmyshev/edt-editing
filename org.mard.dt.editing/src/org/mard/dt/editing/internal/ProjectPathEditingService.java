@@ -28,6 +28,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ListBranchCommand.ListMode;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -228,24 +230,33 @@ public class ProjectPathEditingService
 
         if (content.getBranch() != null && !content.getBranch().isEmpty())
         {
-            String projectPath = project.getFullPath().toString().substring(1);
-            String srcPath = projectPath + "/src"; //$NON-NLS-1$
-
             final Repository repository = GitUtils.getGitRepository(project);
+
+            IPath projectPath = project.getLocation();
+            IPath srcPath = projectPath.append("src"); //$NON-NLS-1$
+            IPath gitPath = new Path(repository.getWorkTree().getAbsolutePath());
+            IPath configurationPath = srcPath.append("Configuration"); //$NON-NLS-1$
+
             try (final Git git = new Git(repository);
                 final RevWalk rw = new RevWalk(repository);
                 final TreeWalk tw = new TreeWalk(repository);)
             {
+                List<Ref> remoteBranches = git.branchList().setListMode(ListMode.REMOTE).call();
+
                 for (String shortBranchName : content.getBranch())
                 {
-                    final String fullBranchName = "refs/heads/" + shortBranchName; //$NON-NLS-1$
-                    final Ref branchRef = repository.exactRef(fullBranchName);
-                    if (branchRef == null)
+                    for (Ref remoteBranch : remoteBranches)
                     {
-                        continue;
+                        if (shortBranchName.equals(repository.shortenRemoteBranchName(remoteBranch.getName())))
+                        {
+                            final Ref branchRef = repository.exactRef(remoteBranch.getName());
+                            if (branchRef != null)
+                            {
+                                final RevCommit branchCommit = rw.parseCommit(branchRef.getObjectId());
+                                tw.addTree(branchCommit.getTree());
+                            }
+                        }
                     }
-                    final RevCommit branchCommit = rw.parseCommit(branchRef.getObjectId());
-                    tw.addTree(branchCommit.getTree());
                 }
 
                 if (tw.getTreeCount() != 0)
@@ -254,16 +265,20 @@ public class ProjectPathEditingService
 
                     while (tw.next())
                     {
-                        if (tw.getPathString().startsWith(srcPath))
+                        IPath gitFilePath = gitPath.append(tw.getPathString());
+
+                        if (srcPath.isPrefixOf(gitFilePath) && !configurationPath.isPrefixOf(gitFilePath)
+                            && !gitFilePath.toFile().isDirectory())
                         {
-                            paths.add(new Path(tw.getPathString().substring(projectPath.length() + 1)));
+                            IPath relativePath = gitFilePath.makeRelativeTo(projectPath);
+                            paths.add(relativePath);
                         }
                     }
                 }
             }
-            catch (IllegalStateException | IOException e)
+            catch (IllegalStateException | IOException | GitAPIException e)
             {
-                e.printStackTrace();
+                CorePlugin.logError(e);
             }
 
         }

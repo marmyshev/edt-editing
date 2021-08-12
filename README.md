@@ -71,11 +71,11 @@ disable:
   path:
     - src/CommonModules/LockedOnlyModule/Module.bsl
    
-  # Full qualified  name of top objects (resources)
+  # Full qualified name of top objects (resources)
   fullname:
     - Catalog.Products.Form.ItemForm.Form
 
-  # List of branches which content should be disabled
+  # List of Git branches which content should be disabled
   branch:
     - vendor
      
@@ -136,7 +136,7 @@ Open metadata objects to check out disabling and enabling features!
 - Указание подсистем, состав объектов которых заблокирован для редактирования, иерархия подсистем поддерживается
 - Указание относительно проекта полного пути к файлу или к каталогу, контент которых заблокирован для редактирования
 - Указание полного квалифицированного имени метаданного 1С:Предприятия (хранящиеся в отдельных файлах), которые должны быть заблокированы в редакторах
-- Указание веток, контент которых заблокирован для редактирования
+- Указание веток Git, список файлов в которых можно заблокировать для редактирования
 
 Настройка правила исключения ( **Enable** )  для разрешения редактирования:
 
@@ -171,7 +171,7 @@ disable:
   fullname:
     - Catalog.Products.Form.ItemForm.Form
 
-  # Список веток
+  # Список веток Git
   branch:
     - vendor
    
