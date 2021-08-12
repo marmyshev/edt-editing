@@ -2,6 +2,7 @@ package org.mard.dt.editing.internal;
 
 import static com._1c.g5.v8.dt.metadata.mdclass.MdClassPackage.Literals.SUBSYSTEM;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +27,12 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.mard.dt.editing.EditingSettings;
 import org.mard.dt.editing.EditingSettingsContent;
 import org.mard.dt.editing.EditingSettingsYamlReader;
@@ -35,6 +42,7 @@ import com._1c.g5.v8.bm.core.IBmObject;
 import com._1c.g5.v8.bm.core.IBmTransaction;
 import com._1c.g5.v8.bm.integration.AbstractBmTask;
 import com._1c.g5.v8.bm.integration.IBmModel;
+import com._1c.g5.v8.dt.common.git.GitUtils;
 import com._1c.g5.v8.dt.core.filesystem.IProjectFileSystemSupport;
 import com._1c.g5.v8.dt.core.filesystem.IProjectFileSystemSupportProvider;
 import com._1c.g5.v8.dt.core.lifecycle.ProjectContext;
@@ -216,9 +224,49 @@ public class ProjectPathEditingService
             {
                 addFullnamePath(paths, content.getFullname(), model, fileSystemSupport);
             }
-
         }
 
+        if (content.getBranch() != null && !content.getBranch().isEmpty())
+        {
+            String projectPath = project.getFullPath().toString().substring(1);
+            String srcPath = projectPath + "/src"; //$NON-NLS-1$
+
+            final Repository repository = GitUtils.getGitRepository(project);
+            try (final Git git = new Git(repository);
+                final RevWalk rw = new RevWalk(repository);
+                final TreeWalk tw = new TreeWalk(repository);)
+            {
+                for (String shortBranchName : content.getBranch())
+                {
+                    final String fullBranchName = "refs/heads/" + shortBranchName; //$NON-NLS-1$
+                    final Ref branchRef = repository.exactRef(fullBranchName);
+                    if (branchRef == null)
+                    {
+                        continue;
+                    }
+                    final RevCommit branchCommit = rw.parseCommit(branchRef.getObjectId());
+                    tw.addTree(branchCommit.getTree());
+                }
+
+                if (tw.getTreeCount() != 0)
+                {
+                    tw.setRecursive(true);
+
+                    while (tw.next())
+                    {
+                        if (tw.getPathString().startsWith(srcPath))
+                        {
+                            paths.add(new Path(tw.getPathString().substring(projectPath.length() + 1)));
+                        }
+                    }
+                }
+            }
+            catch (IllegalStateException | IOException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void addFullnamePath(Set<IPath> paths, List<String> fullnames, IBmModel model,

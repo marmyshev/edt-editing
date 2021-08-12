@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.mard.dt.editing.ui;singleton:=true
-Bundle-Version: 0.3.0.qualifier
+Bundle-Version: 0.4.0.qualifier
 Bundle-Activator: org.mard.dt.editing.internal.ui.UiPlugin
 Bundle-Vendor: %vendor
 Bundle-Localization: plugin
@@ -17,4 +17,4 @@ Import-Package: com._1c.g5.v8.dt.core.platform;version="[10.0.0,11.0.0)",
  com._1c.g5.wiring;version="[2.0.0,3.0.0)",
  com._1c.g5.wiring.binder;version="[1.1.0,2.0.0)",
  com.google.inject;version="[1.3.0,2.0.0)",
- org.mard.dt.editing;version="[0.3.0,0.4.0)"
+ org.mard.dt.editing;version="[0.4.0,0.5.0)"
