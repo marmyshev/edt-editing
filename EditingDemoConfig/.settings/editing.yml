@@ -8,9 +8,13 @@ disable:
   path:
     - src/CommonModules/LockedOnlyModule/Module.bsl
    
-  # Full qualified  name of top objects (resources)
+  # Full qualified name of top objects (resources)
   fullname:
     - Catalog.Products.Form.ItemForm.Form
+  
+  # List of branches which content should be disabled
+  branch:
+    - vendor
 
 # section allows to make some exceptions from disable rule
 enable:

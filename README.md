@@ -23,6 +23,7 @@ Disable Editing plugin developer set up some rules to make read-only mode in UI 
 | 0.1.0 | 2020.1 - 2020.4 |
 | 0.2.0 | 2020.5 - 2020.6 |
 | 0.3.0 | 2020.5+ and newer... |
+| 0.4.0 | 2020.5+ and newer... |
 
 
 [![Drag to your running 1C:EDT* workspace. *Requires Eclipse Marketplace Client](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=5141319 "Drag to your running 1C:EDT* workspace. *Requires Eclipse Marketplace Client")
@@ -40,6 +41,7 @@ Set up rules to **Disable** editing (read-only mode) in editors:
 - specify subsystems which content objects are disabled to edit, hierarchy of subsystems is supported
 - specify project relative full path or folders which content is disabled to edit
 - specify full qualified names of 1C:Enterprise metadata objects (that stores in single file) that should be disabled in editors
+- specify branch names which content is disabled to edit
 
 Set up rules to **Enable** as exceptions from disable rules:
 
@@ -61,17 +63,21 @@ Place Yaml file in your project settings folder: `YourProjectName/.settings/edit
 ```yaml
 # section allows to disable editing in UI
 disable:
-   # List of subsystems which content should be disabled
-   subsystem:
-     - DisabledSubsystem1
-     - DisabledSubsystem2
-   # List of project relative path to file or to folder 
-   path:
-     - src/CommonModules/LockedOnlyModule/Module.bsl
+  # List of subsystems which content should be disabled
+  subsystem:
+    - DisabledSubsystem1
+    - DisabledSubsystem2
+  # List of project relative path to file or to folder 
+  path:
+    - src/CommonModules/LockedOnlyModule/Module.bsl
    
-   # Full qualified  name of top objects (resources)
-   fullname:
-     - Catalog.Products.Form.ItemForm.Form
+  # Full qualified name of top objects (resources)
+  fullname:
+    - Catalog.Products.Form.ItemForm.Form
+
+  # List of Git branches which content should be disabled
+  branch:
+    - vendor
      
 # section allows to make some exceptions from disable rule
 enable:
@@ -112,6 +118,7 @@ Open metadata objects to check out disabling and enabling features!
 | 0.1.0 | 2020.1 - 2020.4 |
 | 0.2.0 | 2020.5 - 2020.6 |
 | 0.3.0 | 2020.5+ и новее... |
+| 0.4.0 | 2020.5+ и новее... |
 
 
 [![Перетяните это в *запущенный воркспейс EDT*. Требуется клиент Маркетплейс Эклипса](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=5141319 "Перетяните это в *запущенный воркспейс EDT*. Требуется клиент Маркетплейс Эклипса")
@@ -126,9 +133,10 @@ Open metadata objects to check out disabling and enabling features!
 
 Настройка правил блокировки ( **Disable** ) редактирования (режим Только-просмотр) в редакторах:
 
-- Указание подсистем, состав объектов которых  заблокирован для редактирования, иерархия подсистем поддерживается
-- Указание относительно проекта полного пути к файлу или к  каталогу, контент которых заблокирован для редактирования
+- Указание подсистем, состав объектов которых заблокирован для редактирования, иерархия подсистем поддерживается
+- Указание относительно проекта полного пути к файлу или к каталогу, контент которых заблокирован для редактирования
 - Указание полного квалифицированного имени метаданного 1С:Предприятия (хранящиеся в отдельных файлах), которые должны быть заблокированы в редакторах
+- Указание веток Git, список файлов в которых можно заблокировать для редактирования
 
 Настройка правила исключения ( **Enable** )  для разрешения редактирования:
 
@@ -151,18 +159,22 @@ Open metadata objects to check out disabling and enabling features!
 ```yaml
 # секция блокирирует редактирование в UI
 disable:
-   # Список подсистем, состав объектов которых должен быть заблокирован
-   subsystem:
-     - DisabledSubsystem1
-     - DisabledSubsystem2
-   # Список путей относительно проекта к файлам или каталогам
-   path:
-     - src/CommonModules/LockedOnlyModule/Module.bsl
+  # Список подсистем, состав объектов которых должен быть заблокирован
+  subsystem:
+    - DisabledSubsystem1
+    - DisabledSubsystem2
+  # Список путей относительно проекта к файлам или каталогам
+  path:
+    - src/CommonModules/LockedOnlyModule/Module.bsl
    
-   # Список полных квалифицированных имен объектов с ресурсами
-   fullname:
-     - Catalog.Products.Form.ItemForm.Form
-     
+  # Список полных квалифицированных имен объектов с ресурсами
+  fullname:
+    - Catalog.Products.Form.ItemForm.Form
+
+  # Список веток Git
+  branch:
+    - vendor
+   
 # секция добавляет исключения из правил блокировки
 enable:
   subsystem:
