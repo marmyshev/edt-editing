@@ -13,6 +13,8 @@ public class EditingSettingsContent
 
     private List<String> branch;
 
+    private boolean merge;
+
     public List<String> getSubsystem()
     {
         return subsystem;
@@ -51,6 +53,16 @@ public class EditingSettingsContent
     public void setBranch(List<String> branch)
     {
         this.branch = branch;
+    }
+
+    public boolean isMerge()
+    {
+        return merge;
+    }
+
+    public void setMerge(boolean merge)
+    {
+        this.merge = merge;
     }
 
 }

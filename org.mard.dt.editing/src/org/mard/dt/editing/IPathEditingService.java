@@ -37,4 +37,12 @@ public interface IPathEditingService
      */
     boolean canEdit(IProject project, IPath path);
 
+    /**
+     * Can edit the object by compare and merge system.
+     *
+     * @param project the project, cannot be {@code null}.
+     * @return true, if can edit
+     */
+    boolean canEditInMerge(IProject project);
+
 }

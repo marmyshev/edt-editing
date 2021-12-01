@@ -81,6 +81,7 @@ disable:
      
 # section allows to make some exceptions from disable rule
 enable:
+  merge: true # allows to edit by compare and merge EDT system
   subsystem:
     - EnabledSubsystem
   path:
@@ -177,6 +178,7 @@ disable:
    
 # секция добавляет исключения из правил блокировки
 enable:
+  merge: true # разрешает редактирование из системы Саравнения/Объединения
   subsystem:
     - EnabledSubsystem
   path:

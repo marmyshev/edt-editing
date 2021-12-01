@@ -18,6 +18,7 @@ disable:
 
 # section allows to make some exceptions from disable rule
 enable:
+  merge: true # allows to edit by compare and merge EDT system
   subsystem:
     - EnabledSubsystem
   path:

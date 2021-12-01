@@ -189,6 +189,17 @@ public class ProjectPathEditingService
         return canEdit(cache, path);
     }
 
+    @Override
+    public boolean canEditInMerge(IProject project)
+    {
+        if (project == null)
+            return true;
+
+        ProjectCache cache = projects.computeIfAbsent(project, this::createProjectCache);
+
+        return cache.canEditInMerge();
+    }
+
     private void addAllPath(IProject project, EditingSettingsContent content, Set<IPath> paths)
     {
 
@@ -230,59 +241,68 @@ public class ProjectPathEditingService
 
         if (content.getBranch() != null && !content.getBranch().isEmpty())
         {
-            final Repository repository = GitUtils.getGitRepository(project);
-
-            IPath projectPath = project.getLocation();
-            IPath srcPath = projectPath.append("src"); //$NON-NLS-1$
-            IPath gitPath = new Path(repository.getWorkTree().getAbsolutePath());
-            IPath configurationPath = srcPath.append("Configuration"); //$NON-NLS-1$
-
-            try (final Git git = new Git(repository);
-                final RevWalk rw = new RevWalk(repository);
-                final TreeWalk tw = new TreeWalk(repository);)
-            {
-                List<Ref> remoteBranches = git.branchList().setListMode(ListMode.REMOTE).call();
-
-                for (String shortBranchName : content.getBranch())
-                {
-                    for (Ref remoteBranch : remoteBranches)
-                    {
-                        if (shortBranchName.equals(repository.shortenRemoteBranchName(remoteBranch.getName())))
-                        {
-                            final Ref branchRef = repository.exactRef(remoteBranch.getName());
-                            if (branchRef != null)
-                            {
-                                final RevCommit branchCommit = rw.parseCommit(branchRef.getObjectId());
-                                tw.addTree(branchCommit.getTree());
-                            }
-                        }
-                    }
-                }
-
-                if (tw.getTreeCount() != 0)
-                {
-                    tw.setRecursive(true);
-
-                    while (tw.next())
-                    {
-                        IPath gitFilePath = gitPath.append(tw.getPathString());
-
-                        if (srcPath.isPrefixOf(gitFilePath) && !configurationPath.isPrefixOf(gitFilePath)
-                            && !gitFilePath.toFile().isDirectory())
-                        {
-                            IPath relativePath = gitFilePath.makeRelativeTo(projectPath);
-                            paths.add(relativePath);
-                        }
-                    }
-                }
-            }
-            catch (IllegalStateException | IOException | GitAPIException e)
-            {
-                CorePlugin.logError(e);
-            }
-
+            addBranches(paths, content.getBranch(), project);
         }
     }
+
+    private void addBranches(Set<IPath> paths, List<String> branches, IProject project)
+    {
+        final Repository repository = GitUtils.getGitRepository(project);
+        if (repository == null)
+        {
+            return;
+        }
+
+        IPath projectPath = project.getLocation();
+        IPath srcPath = projectPath.append("src"); //$NON-NLS-1$
+        IPath gitPath = new Path(repository.getWorkTree().getAbsolutePath());
+        IPath configurationPath = srcPath.append("Configuration"); //$NON-NLS-1$
+
+        try (final Git git = new Git(repository);
+            final RevWalk rw = new RevWalk(repository);
+            final TreeWalk tw = new TreeWalk(repository);)
+        {
+            List<Ref> remoteBranches = git.branchList().setListMode(ListMode.REMOTE).call();
+
+            for (String shortBranchName : branches)
+            {
+                for (Ref remoteBranch : remoteBranches)
+                {
+                    if (shortBranchName.equals(repository.shortenRemoteBranchName(remoteBranch.getName())))
+                    {
+                        final Ref branchRef = repository.exactRef(remoteBranch.getName());
+                        if (branchRef != null)
+                        {
+                            final RevCommit branchCommit = rw.parseCommit(branchRef.getObjectId());
+                            tw.addTree(branchCommit.getTree());
+                        }
+                    }
+                }
+            }
+
+            if (tw.getTreeCount() != 0)
+            {
+                tw.setRecursive(true);
+
+                while (tw.next())
+                {
+                    IPath gitFilePath = gitPath.append(tw.getPathString());
+
+                    if (srcPath.isPrefixOf(gitFilePath) && !configurationPath.isPrefixOf(gitFilePath)
+                        && !gitFilePath.toFile().isDirectory())
+                    {
+                        IPath relativePath = gitFilePath.makeRelativeTo(projectPath);
+                        paths.add(relativePath);
+                    }
+                }
+            }
+        }
+        catch (IllegalStateException | IOException | GitAPIException e)
+        {
+            CorePlugin.logError(e);
+        }
+    }
+
 
     private void addFullnamePath(Set<IPath> paths, List<String> fullnames, IBmModel model,
         IProjectFileSystemSupport fileSystemSupport)
@@ -432,7 +452,7 @@ public class ProjectPathEditingService
         EditingSettings settings = loadEditingSettings(project);
         if (settings == null)
         {
-            return new ProjectCache(disable, enable);
+            return new ProjectCache(disable, enable, true);
         }
 
         if (settings.getDisable() != null)
@@ -452,7 +472,8 @@ public class ProjectPathEditingService
             }
         }
 
-        return new ProjectCache(disable, enable);
+        boolean canEditInMerge = settings.getEnable() != null && settings.getEnable().isMerge();
+        return new ProjectCache(disable, enable, canEditInMerge);
     }
 
     private EditingSettings loadEditingSettings(IProject project)
@@ -472,7 +493,9 @@ public class ProjectPathEditingService
 
         private final Set<IPath> enable;
 
-        public ProjectCache(Set<IPath> disable, Set<IPath> enable)
+        private final boolean canEditInMerge;
+
+        public ProjectCache(Set<IPath> disable, Set<IPath> enable, boolean canEditInMerge)
         {
             if (disable == null || disable.isEmpty())
             {
@@ -491,6 +514,7 @@ public class ProjectPathEditingService
             {
                 this.enable = Set.copyOf(enable);
             }
+            this.canEditInMerge = canEditInMerge;
 
         }
 
@@ -507,6 +531,11 @@ public class ProjectPathEditingService
         public Cache<String, Boolean> getUriCache()
         {
             return uriCache;
+        }
+
+        public boolean canEditInMerge()
+        {
+            return canEditInMerge;
         }
 
     }

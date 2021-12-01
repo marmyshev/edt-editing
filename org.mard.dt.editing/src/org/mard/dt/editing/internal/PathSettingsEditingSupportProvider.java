@@ -1,5 +1,10 @@
 package org.mard.dt.editing.internal;
 
+import java.lang.StackWalker.Option;
+import java.lang.StackWalker.StackFrame;
+import java.util.Optional;
+import java.util.Set;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.EObject;
 import org.mard.dt.editing.IPathEditingService;
@@ -15,6 +20,9 @@ import com.google.inject.Inject;
 public class PathSettingsEditingSupportProvider
     implements IModelEditingSupportProvider
 {
+
+    private static final Set<String> IGNORE_STACK_CALLER_CLASS =
+        Set.of("com._1c.g5.v8.dt.internal.md.compare.participant.MdObjectComparisonParticipant"); //$NON-NLS-1$
 
     private final IResourceLookup resourceLookup;
 
@@ -53,7 +61,25 @@ public class PathSettingsEditingSupportProvider
         if (project == null)
             return true;
 
-        return editingService.canEdit(project, eObject);
+        boolean canEdit = editingService.canEdit(project, eObject);
+        if (!canEdit && editingService.canEditInMerge(project) && isCallFromMerge())
+        {
+            return true;
+        }
+        return canEdit;
     }
 
+    private boolean isCallFromMerge()
+    {
+        StackWalker walker = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE);
+        //@formatter:off
+        Optional<String> callerClass = walker.walk(s ->
+            s.limit(10)
+            .map(StackFrame::getClassName)
+            .filter(IGNORE_STACK_CALLER_CLASS::contains)
+            .findFirst());
+        //@formatter:on
+
+        return callerClass.isPresent();
+    }
 }
