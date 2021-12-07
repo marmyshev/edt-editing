@@ -91,6 +91,16 @@ enable:
 
 ##  Demo example
 
+### Simple example for disabling an entire project
+
+```yaml
+# section allows to disable editing in UI
+disable:
+  # List of project relative path to file or to folder 
+  path:
+    - src/
+```
+
 Open 1C:EDT and import project from this repository [EditingDemoConfig](EditingDemoConfig) into workspace.
 
 [Demo settings here](EditingDemoConfig/.settings/editing.yml).
@@ -188,6 +198,15 @@ enable:
 
 ## Демо пример
 
+### Простой пример для блокировки всего проекта
+
+```yaml
+# section allows to disable editing in UI
+disable:
+  # List of project relative path to file or to folder 
+  path:
+    - src/
+```
 
 Откройте 1C:EDT и импортируйте проект из этого репозитория [EditingDemoConfig](EditingDemoConfig) в воркспейс.
 
