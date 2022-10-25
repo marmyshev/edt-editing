@@ -107,6 +107,7 @@ Open 1C:EDT and import project from this repository [EditingDemoConfig](EditingD
 
 Open metadata objects to check out disabling and enabling features!
 
+> Note! If the plugin was installed after the creation of the workspace then, to display the icons of blocked objects in the navigator, you need to enable display the icon in the settings "Window -> Parameters -> Appearance -> Label decoration", item "Disable to edit objects"
 
 # Плагин запрета редактирования для 1C:EDT
 
@@ -214,3 +215,6 @@ disable:
 
 Откройте объекты метаданных, чтобы исследовать функциональность блокировки и разрешения!
 
+> Примечание! Если установка плагина была выполнена после создания проекта (воркспейса), то, для отображения иконок блокированных объектов в навигаторе, необходимо включить отображение значков в настройках "Окно -> Праметры -> Внешний вид -> Оформление меток" , пункт "Disable to edit objects"
+
+![image](images/settings_screen.png "Параметры меток")
