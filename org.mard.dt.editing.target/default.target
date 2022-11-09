@@ -45,9 +45,6 @@
 <unit id="com._1c.g5.v8.dt.xtext.ui.feature.group" version="0.0.0"/>
 <unit id="com._1c.g5.wiring.feature.feature.group" version="0.0.0"/>
 <unit id="com.e1c.g5.v8.dt.javadocs" version="0.0.0"/>
-<unit id="com.company1c.link.agent.core.feature.feature.group" version="0.0.0"/>
-<unit id="com.company1c.link.ide.edt.feature.feature.group" version="0.0.0"/>
-<unit id="com.company1c.link.agent.dependencies.feature.feature.group" version="0.0.0"/>
 <unit id="de.itemis.xtext.antlr.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.babel.nls_eclipse_ru.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.babel.nls_technology.egit_ru.feature.group" version="0.0.0"/>
@@ -74,7 +71,6 @@
 <unit id="org.eclipse.emf.validation.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.validation.ocl.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.workspace.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.epp.mpc.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.equinox.p2.core.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.equinox.p2.extras.feature.feature.group" version="0.0.0"/>
