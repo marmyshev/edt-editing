@@ -71,7 +71,7 @@ deploy:
     - |
       for file in `find ./ -type f`; do
         echo "Upload file ${file}"
-        'curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${file}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/p2/latest/${file}"'
+        curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${file}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/p2/latest/${file}"
       done
   only:
     - master@marmyshev/edt-editing
