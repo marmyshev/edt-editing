@@ -23,11 +23,16 @@ build:
   image: maven:3-jdk-11
   stage: build
   script:
+    - VER=$( mvn -f build/pom.xml -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec )
+    - export VERSION=${VER/-SNAPSHOT/}
+    - echo Build ver ${VERSION}
+    - echo ${VERSION} > version.txt
     - mvn ${MAVEN_CLI_OPTS} clean package -P build,site
   artifacts:
     expire_in: 4 weeks
     when: always
     paths:
+      - version.txt
       - org.mard.dt.editing.repository/target/repository*.zip
       - org.mard.dt.editing.repository/target/repository/*
       - "*/target/results"
@@ -49,5 +54,18 @@ pages:
   artifacts:
     paths:
       - public
+  only:
+    - master@marmyshev/edt-editing
+
+deploy:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    - export VERSION=$( cat version.txt )
+    - echo Project ver ${VERSION}
+    - ZIP_FILE_PATH=$( find ./org.mard.dt.editing.repository/target/ -type f -name "repository-*-SNAPSHOT.zip" )
+    - 'curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${ZIP_FILE_PATH}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/${VERSION}/repo.zip"'
+    - 'curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${ZIP_FILE_PATH}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/latest/repo.zip"'
   only:
     - master@marmyshev/edt-editing
