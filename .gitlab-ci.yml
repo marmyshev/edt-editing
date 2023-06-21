@@ -3,6 +3,7 @@ variables:
   # when running from the command line.
   # `installAtEnd` and `deployAtEnd`are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -Dtycho.localArtifacts=ignore -Dmaven.repo.local=.m2/repository -f build/pom.xml -s build/settings.xml"
+  VERSIONS: latest 0.4.0
 
 # Cache downloaded dependencies and plugins between builds.
 # To keep cache across branches add 'key: "$CI_JOB_NAME"'
@@ -40,32 +41,70 @@ build:
       - "*/target/site/jacoco"
       - "*/target/jacoco*"
 
-pages:
+.deploy:
   stage: deploy
+  cache: {}
+  needs:
+    - build
+  before_script:
+    - export VERSION=$( cat version.txt )
+    - echo Project ver ${VERSION}
+    - ZIP_FILE_PATH=$( find ./org.mard.dt.editing.repository/target/ -type f -name "repository-*-SNAPSHOT.zip" )
   script:
-    - mkdir -p ./public/update
-    - mv -f ./org.mard.dt.editing.repository/target/repository/* ./public/update
-    - mv -f ./org.mard.dt.editing.repository/target/repository-*-SNAPSHOT.zip ./public
+    - echo "Need deploy"
+
+deploy-current:
+  extends: .deploy
+  script:
+    - 'curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${ZIP_FILE_PATH}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/${VERSION}/repo.zip"'
+  only:
+    - master@marmyshev/edt-editing
+
+deploy-manual:
+  extends: .deploy
+  script:
+    - 'curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${ZIP_FILE_PATH}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/${VERSION}/repo.zip"'
+  when: manual
+
+deploy-latest:
+  extends: .deploy
+  script:
+    - 'curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${ZIP_FILE_PATH}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/latest/repo.zip"'
+  only:
+    - master@marmyshev/edt-editing
+
+pages1:
+  extends: .deploy
+  stage: post-deploy
+  image: 
+    name: pandoc/core
+    entrypoint: [""]
+  cache: {}
   dependencies:
     - build
+  script:
+    - apk add curl
+    - mkdir -p ./public/update
+    - pandoc --from=markdown --to=html5 ${PWD}/README.md -o ${PWD}/public/index.html
+    - mv -f ./org.mard.dt.editing.repository/target/repository/* ./public/update
+    - mv -f ./images ./public/
+    - mv -f "${ZIP_FILE_PATH}" ./public
+    - |
+      for VERSION in $VERSIONS
+        do
+          echo "Downloading ver: [${VERSION}]"
+          mkdir -p ./public/${VERSION}
+          curl -f -L --header "JOB-TOKEN: $CI_JOB_TOKEN" -o "${PWD}/public/${VERSION}/repo.zip" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/${VERSION}/repo.zip"
+          echo "- [${VERSION} P2-ZIP](../${VERSION}/repo.zip)" >> ${PWD}/update.md
+          echo "" >> ${PWD}/update.md
+        done
+    - pandoc --from=markdown --to=html5 ${PWD}/update.md -o ${PWD}/public/update/index.html
   environment:
     name: pages
     url: "${CI_PAGES_URL}"
   artifacts:
     paths:
       - public
-  only:
-    - master@marmyshev/edt-editing
-
-deploy:
-  stage: deploy
-  dependencies:
-    - build
-  script:
-    - export VERSION=$( cat version.txt )
-    - echo Project ver ${VERSION}
-    - ZIP_FILE_PATH=$( find ./org.mard.dt.editing.repository/target/ -type f -name "repository-*-SNAPSHOT.zip" )
-    - 'curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${ZIP_FILE_PATH}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/${VERSION}/repo.zip"'
-    - 'curl -f --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "${ZIP_FILE_PATH}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/latest/repo.zip"'
+    when: always
   only:
     - master@marmyshev/edt-editing
