@@ -9,7 +9,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.EObject;
 import org.mard.dt.editing.IPathEditingService;
 
-import com._1c.g5.v8.bm.core.EngineState;
 import com._1c.g5.v8.bm.core.IBmEngine;
 import com._1c.g5.v8.bm.core.IBmObject;
 import com._1c.g5.v8.dt.core.model.EditingMode;
@@ -51,7 +50,7 @@ public class PathSettingsEditingSupportProvider
         if (eObject instanceof IBmObject)
         {
             IBmEngine engine = ((IBmObject)eObject).bmGetEngine();
-            if (engine != null && engine.getState() != EngineState.RUNNING)
+            if (engine != null && !engine.isActive())
             {
                 return true;
             }
