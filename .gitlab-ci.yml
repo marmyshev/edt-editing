@@ -73,7 +73,7 @@ deploy-latest:
   only:
     - master@marmyshev/edt-editing
 
-pages1:
+pages:
   extends: .deploy
   stage: post-deploy
   image: 
