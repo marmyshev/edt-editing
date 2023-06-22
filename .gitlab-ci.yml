@@ -3,7 +3,7 @@ variables:
   # when running from the command line.
   # `installAtEnd` and `deployAtEnd`are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -Dtycho.localArtifacts=ignore -Dmaven.repo.local=.m2/repository -f build/pom.xml -s build/settings.xml"
-  VERSIONS: latest 0.5.0 0.4.0
+  VERSIONS: 0.5.0 0.4.0
 
 # Cache downloaded dependencies and plugins between builds.
 # To keep cache across branches add 'key: "$CI_JOB_NAME"'
@@ -83,13 +83,33 @@ pages:
   dependencies:
     - build
   script:
-    - apk add curl
+    - apk add curl unzip
     - mkdir -p ./public/update
     - pandoc --from=markdown --to=html5 ${PWD}/README.md -o ${PWD}/public/index.html
-    - mv -f ./org.mard.dt.editing.repository/target/repository/* ./public/update
     - mv -f ./images ./public/
     - mv -f "${ZIP_FILE_PATH}" ./public
+    - content_name="./public/update/compositeContent.xml"
+    - artifacts_name="./public/update/compositeArtifacts.xml"
     - |
+      timestamp=$( date +%s%3N )
+      echo "<?xml version='1.0' encoding='UTF-8'?>" > $content_name
+      echo "<?compositeMetadataRepository version='1.0.0'?>" >> $content_name
+      echo "<repository name='1C:EDT Disable Editing Plugins'" >> $content_name
+      echo "    type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>" >> $content_name
+      echo "  <properties size='1'>" >> $content_name
+      echo "    <property name='p2.timestamp' value='${timestamp}'/>" >> $content_name
+      echo "  </properties>" >> $content_name
+      
+      echo "<?xml version='1.0' encoding='UTF-8'?>" > $artifacts_name
+      echo "<?compositeArtifactRepository version='1.0.0'?>" >> $artifacts_name
+      echo "<repository name='1C:EDT Disable Editing Plugins'" >> $artifacts_name
+      echo "    type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>" >> $artifacts_name
+      echo "  <properties size='1'>" >> $artifacts_name
+      echo "    <property name='p2.timestamp' value='${timestamp}'/>" >> $artifacts_name
+      echo "  </properties>" >> $artifacts_name
+    - |
+      count=0
+      children=""
       for VERSION in $VERSIONS
         do
           echo "Downloading ver: [${VERSION}]"
@@ -97,7 +117,22 @@ pages:
           curl -f -L --header "JOB-TOKEN: $CI_JOB_TOKEN" -o "${PWD}/public/${VERSION}/repo.zip" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/zip-p2/${VERSION}/repo.zip"
           echo "- [${VERSION} P2-ZIP](../${VERSION}/repo.zip)" >> ${PWD}/update.md
           echo "" >> ${PWD}/update.md
+          mkdir -p "${PWD}/public/update/${VERSION}"
+          unzip "${PWD}/public/${VERSION}/repo.zip" -d "${PWD}/public/update/${VERSION}"
+          count=$((count+1))
+          children="${children}    <child location='${VERSION}'/>"$'\n'
         done
+      echo "  <children size='${count}'>" >> $content_name
+      echo "  <children size='${count}'>" >> $artifacts_name
+
+      echo "${children}" >> $content_name
+      echo "${children}" >> $artifacts_name
+    - |
+      echo "  </children>" >> $content_name
+      echo "</repository>" >> $content_name
+
+      echo "  </children>" >> $artifacts_name
+      echo "</repository>" >> $artifacts_name
     - pandoc --from=markdown --to=html5 ${PWD}/update.md -o ${PWD}/public/update/index.html
   environment:
     name: pages
