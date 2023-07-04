@@ -3,5 +3,7 @@
    <feature id="org.mard.dt.editing.feature">
       <category name="org.mard.dt.editing.public"/>
    </feature>
+   <feature id="org.brainwy.liclipsetext.feature"/>
+   <feature id="org.eclipse.license"/>
    <category-def name="org.mard.dt.editing.public" label="1C:EDT Plugins"/>
 </site>

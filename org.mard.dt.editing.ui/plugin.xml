@@ -25,5 +25,15 @@
          </description>
       </decorator>
    </extension>
+   <extension
+         point="com._1c.g5.v8.dt.ui.projectEditorContributions">
+      <section
+            class="org.mard.dt.editing.internal.ui.ProjectEditorSection"
+            description="%projectSection.description"
+            id="org.mard.dt.editing.ui.section"
+            page="com._1c.g5.v8.dt.ui.projectEditor.page.Overview"
+            title="%projectSection.title">
+      </section>
+   </extension>
 
 </plugin>
