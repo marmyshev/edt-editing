@@ -1,0 +1,37 @@
+## section allows to disable editing in UI
+#disable:
+
+  # List of subsystems which content should be disabled
+#  subsystem:
+#    - DisabledSubsystem1
+#    - DisabledSubsystem2
+
+  # List of project relative path to file or to folder 
+#  path:
+#    - src/CommonModules/LockedOnlyModule/Module.bsl
+   
+  # Full qualified name of top objects (resources)
+#  fullname:
+#    - Catalog.Products.Form.ItemForm.Form
+
+  # List of Git branches which content should be disabled
+#  branch:
+#    - vendor
+     
+## section allows to make some exceptions from disable rule
+#enable:
+
+#  merge: true # allows to edit by compare and merge EDT system
+
+  # List of subsystems which content should be enabled
+#  subsystem:
+#    - EnabledSubsystem
+
+  # List of project relative path to file or to folder 
+#  path:
+#    - src/Catalogs/Enabled
+
+  # Full qualified name of top objects (resources)
+#  fullname:
+#    - Catalog.Products.Form.ItemForm.Form
+

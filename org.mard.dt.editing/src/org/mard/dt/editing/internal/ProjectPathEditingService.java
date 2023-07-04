@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (C) 2021, 2023, Dmitriy Marmyshev and others.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     Dmitriy Marmyshev - initial API and implementation
+ *******************************************************************************/
 package org.mard.dt.editing.internal;
 
 import static com._1c.g5.v8.dt.metadata.mdclass.MdClassPackage.Literals.SUBSYSTEM;
@@ -67,8 +79,6 @@ public class ProjectPathEditingService
 {
 
     private static final int TOP_OBJECT_FIRST_SEGMENTS = 3;
-
-    private static final IPath SETTING_FILE_PATH = new Path(".settings/editing.yml"); //$NON-NLS-1$
 
     private static final IPath SUBSYSTEM_PATH = new Path("src/Subsystems"); //$NON-NLS-1$
 

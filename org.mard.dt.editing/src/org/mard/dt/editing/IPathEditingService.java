@@ -1,10 +1,20 @@
-/**
+/*******************************************************************************
+ * Copyright (C) 2021, 2023, Dmitriy Marmyshev and others.
  *
- */
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     Dmitriy Marmyshev - initial API and implementation
+ *******************************************************************************/
 package org.mard.dt.editing;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.EObject;
 
 import com._1c.g5.wiring.IManagedService;
@@ -18,6 +28,8 @@ import com._1c.g5.wiring.IManagedService;
 public interface IPathEditingService
     extends IManagedService
 {
+
+    static final IPath SETTING_FILE_PATH = new Path(".settings/editing.yml"); //$NON-NLS-1$
 
     /**
      * Can edit the eObject.

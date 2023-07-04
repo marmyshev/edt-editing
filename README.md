@@ -90,6 +90,18 @@ enable:
 
 ```
 
+### Create or open settings in Project editor
+
+Open "Project editor" in menu of 1C Navigator.
+
+Create new disable editing settings file and continue to setup your project.
+
+![image](images/create_settings.png "Create new disable editing settings")
+
+Or open existing disable editing settings file to setup your project.
+
+![image](images/open_settings.png "Open existing settings file")
+
 ##  Demo example
 
 ### Simple example for disabling an entire project
@@ -199,14 +211,27 @@ enable:
 
 ```
 
+### Создайте или откройте настройки в Редакторе проекта
+
+Откройте "Редактор проекта" в меню Навигатора 1С.
+
+Создайте новый файл настроек запрета редактирования и продолжите настройку вашего проекта.
+
+![image](images/create_settings.png "Создайте новые настройки запрета редактирования")
+
+Или откройте существующий файл настроект запрета редактирования чтобы настроить ваш проект.
+
+![image](images/open_settings.png "Откройте существующий файл настроек")
+
+
 ## Демо пример
 
 ### Простой пример для блокировки всего проекта
 
 ```yaml
-# section allows to disable editing in UI
+# секция блокирирует редактирование в UI
 disable:
-  # List of project relative path to file or to folder 
+  # Список путей относительно проекта к файлам или каталогам
   path:
     - src/
 ```
