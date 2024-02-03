@@ -14,7 +14,7 @@
 #  fullname:
 #    - Catalog.Products.Form.ItemForm.Form
 
-  # List of Git branches which content should be disabled
+  # List of Git remote branches which content should be disabled
 #  branch:
 #    - vendor
      

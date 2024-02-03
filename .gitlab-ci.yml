@@ -91,7 +91,7 @@ pages:
     - content_name="./public/update/compositeContent.xml"
     - artifacts_name="./public/update/compositeArtifacts.xml"
     - |
-      timestamp=$( date +%s%3N )
+      timestamp=$( date +%s%3 )
       echo "<?xml version='1.0' encoding='UTF-8'?>" > $content_name
       echo "<?compositeMetadataRepository version='1.0.0'?>" >> $content_name
       echo "<repository name='1C:EDT Disable Editing Plugins'" >> $content_name
@@ -133,6 +133,11 @@ pages:
 
       echo "  </children>" >> $artifacts_name
       echo "</repository>" >> $artifacts_name
+    - p2index="./public/update/p2.index"
+    - |
+      echo "version=1" > $p2index
+      echo "metadata.repository.factory.order=compositeContent.xml,\!" >> $p2index
+      echo "artifact.repository.factory.order=compositeArtifacts.xml,\!" >> $p2index
     - pandoc --from=markdown --to=html5 ${PWD}/update.md -o ${PWD}/public/update/index.html
   environment:
     name: pages
