@@ -46,10 +46,6 @@
 <unit id="com._1c.g5.wiring.feature.feature.group" version="0.0.0"/>
 <unit id="com.e1c.g5.v8.dt.javadocs" version="0.0.0"/>
 <unit id="de.itemis.xtext.antlr.feature.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.babel.nls_eclipse_ru.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.babel.nls_technology.egit_ru.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.babel.nls_technology.jgit_ru.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.babel.nls_webtools_ru.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.draw2d.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.e4.rcp.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.ecf.core.feature.feature.group" version="0.0.0"/>
@@ -113,6 +109,8 @@
 
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.brainwy.liclipsetext.feature.feature.group" version="0.0.0"/>
+<unit id="org.jcodings" version="0.0.0"/>
+<unit id="org.joni" version="0.0.0"/>
 <repository location="https://www.liclipse.com/text/updates"/>
 </location>
 
