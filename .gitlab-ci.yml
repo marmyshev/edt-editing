@@ -21,7 +21,7 @@ stages:
 
 build:
   # build plugin using Maven
-  image: maven:3-jdk-11
+  image: maven:3.9.4-eclipse-temurin-17
   stage: build
   script:
     - VER=$( mvn -f build/pom.xml -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec )
