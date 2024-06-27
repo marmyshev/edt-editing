@@ -3,7 +3,7 @@ variables:
   # when running from the command line.
   # `installAtEnd` and `deployAtEnd`are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -Dtycho.localArtifacts=ignore -Dmaven.repo.local=.m2/repository -f build/pom.xml -s build/settings.xml"
-  VERSIONS: 0.5.0 0.4.0
+  VERSIONS: 0.6.0 0.5.0 0.4.0
 
 # Cache downloaded dependencies and plugins between builds.
 # To keep cache across branches add 'key: "$CI_JOB_NAME"'

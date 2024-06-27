@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.mard.dt.editing;singleton:=true
-Bundle-Version: 0.5.0.qualifier
+Bundle-Version: 0.6.0.qualifier
 Bundle-Activator: org.mard.dt.editing.internal.CorePlugin
 Bundle-Vendor: %vendor
 Bundle-Localization: plugin
@@ -29,4 +29,4 @@ Import-Package: com._1c.g5.v8.bm.core;version="[8.0.0,9.0.0)",
  org.yaml.snakeyaml;version="[1.15.0,2.0.0)",
  org.yaml.snakeyaml.constructor;version="[1.15.0,2.0.0)",
  org.yaml.snakeyaml.introspector;version="[1.15.0,2.0.0)"
-Export-Package: org.mard.dt.editing;version="0.5.0"
+Export-Package: org.mard.dt.editing;version="0.6.0"
