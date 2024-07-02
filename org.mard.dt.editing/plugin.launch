@@ -14,9 +14,10 @@
     <booleanAttribute key="includeOptional" value="true"/>
     <stringAttribute key="location" value="${workspace_loc}/../runtime-EDT-Editing"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
-    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
+    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dosgi.requiredJavaVersion=17 --add-modules=ALL-SYSTEM --add-opens=java.base/java.lang.constant=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.ref=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.time=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED -XX:+UseG1GC -XX:+UseStringDeduplication -Xms80m -Dlog4j.configuration=platform:/plugin/com._1c.g5.v8.dt.logging/log4j.properties -Dlog4j.formatMsgNoLookups=true -Dlog4j2.formatMsgNoLookups=true -Dorg.osgi.framework.bundle.parent=ext -Dosgi.module.lock.timeout=240 -De1c.dt.monitoring.host= -DmigrationEnabled=true -DmigrationNotificationEnabled=true -Dorg.eclipse.e4.ui.css.theme.disableOSDarkThemeInherit=true -server -Dosgi.debug=.options"/>
     <stringAttribute key="pde.version" value="3.3"/>
     <stringAttribute key="product" value="com._1c.g5.v8.dt.product.application.rcp"/>
     <booleanAttribute key="show_selected_only" value="false"/>

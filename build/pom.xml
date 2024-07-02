@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mard.dt.editing</groupId>
 	<artifactId>build</artifactId>
-	<version>0.5.0-SNAPSHOT</version>
+	<version>0.6.0-SNAPSHOT</version>
 	<name>Disable Editing plugin for 1C:EDT</name>
 	<packaging>pom</packaging>
 
 	<prerequisites>
-		<maven>3.6.0</maven>
+		<maven>3.9.4</maven>
 	</prerequisites>
 
 	<scm>
@@ -19,11 +19,11 @@
 
 	<properties>
 		<name>Disable Editing plugin for 1C:EDT</name>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-		<maven.compiler.release>11</maven.compiler.release>
-		<tycho.version>2.2.0</tycho.version>
-		<tycho.extras.version>2.2.0</tycho.extras.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.release>17</maven.compiler.release>
+		<tycho.version>4.0.5</tycho.version>
+		<tycho.extras.version>4.0.5</tycho.extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
@@ -142,13 +142,13 @@
 				<version>${tycho.version}</version>
 				<configuration>
 					<resolver>p2</resolver>
-					<executionEnvironment>JavaSE-11</executionEnvironment>
+					<executionEnvironment>JavaSE-17</executionEnvironment>
 					<includePackedArtifacts>true</includePackedArtifacts>
 					<target>
 						<artifact>
 							<groupId>org.mard.dt.editing.target</groupId>
 							<artifactId>default</artifactId>
-							<version>0.5.0-SNAPSHOT</version>
+							<version>0.6.0-SNAPSHOT</version>
 						</artifact>
 					</target>
 					<environments>
@@ -168,6 +168,20 @@
 							<arch>x86_64</arch>
 						</environment>
 					</environments>
+                    <dependency-resolution>
+                        <extraRequirements>
+                            <requirement>
+                                <type>eclipse-plugin</type>
+                                <id>org.apache.felix.scr</id>
+                                <versionRange>0.0.0</versionRange>
+                            </requirement>
+                            <requirement>
+                                <type>eclipse-plugin</type>
+                                <id>org.apache.aries.spifly.dynamic.bundle</id>
+                                <versionRange>0.0.0</versionRange>
+                            </requirement>
+                        </extraRequirements>
+                    </dependency-resolution>
 				</configuration>
 			</plugin>
 			<plugin>
