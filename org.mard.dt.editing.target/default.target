@@ -39,6 +39,12 @@
 <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20211213173813/repository/"/>
 </location>
 
+<!-- ORBIT 4.37.0 -->
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<repository id="artifactory" location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.37.0/"/>
+    <unit id="org.eclipse.orbit.maven.org.apache.batik.feature.group" version="4.37.0"/>
+</location>
+
 <!-- Eclipse -->
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
@@ -46,14 +52,14 @@
 <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.orbit.xml-apis-ext" version="0.0.0"/>
 <unit id="org.eclipse.ecf.filetransfer.httpclientjava.feature.feature.group" version="0.0.0"/>
+<unit id="org.jcodings" version="0.0.0"/>
+<unit id="org.joni" version="0.0.0"/>
 <repository id="eclipse_repository" location="https://download.eclipse.org/releases/2023-12/"/>
 </location>
 
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.brainwy.liclipsetext.feature.feature.group" version="0.0.0"/>
-<unit id="org.jcodings" version="0.0.0"/>
-<unit id="org.joni" version="0.0.0"/>
-<repository location="https://www.liclipse.com/text/updates"/>
+<repository location="http://update.liclipse.com/latest"/>
 </location>
 
 </locations>
