@@ -20,7 +20,8 @@ Disable Editing plugin developer set up some rules to make read-only mode in UI 
 
 | Plugin Version | 1C:EDT version |
 |----------------|----------------|
-| [0.6.0](https://gitlab.com/marmyshev/edt-editing/-/packages/) | 2024.1+ and newer... |
+| [0.7.0](https://gitlab.com/marmyshev/edt-editing/-/packages/) | 2025.2+ and newer... |
+| [0.6.0](https://gitlab.com/marmyshev/edt-editing/-/packages/) | 2024.1 - 2025.1 |
 | [0.5.0](https://gitlab.com/marmyshev/edt-editing/-/packages/15488906) | 2023.1 - 2023.3 |
 | [0.4.0](https://gitlab.com/marmyshev/edt-editing/-/packages/10924902) | 2020.5 - 2022.2 |
 | 0.3.0 | 2020.5+ and newer... |
@@ -141,7 +142,8 @@ Open metadata objects to check out disabling and enabling features!
 
 | Версия плагина | Версия 1C:EDT |
 |----------------|---------------|
-| [0.6.0](https://gitlab.com/marmyshev/edt-editing/-/packages/) | 2024.1+ и новее... |
+| [0.7.0](https://gitlab.com/marmyshev/edt-editing/-/packages/) | 2025.2+ и новее... |
+| [0.6.0](https://gitlab.com/marmyshev/edt-editing/-/packages/) | 2024.1 - 2025.1 |
 | [0.5.0](https://gitlab.com/marmyshev/edt-editing/-/packages/15488906) | 2023.1 - 2023.3 |
 | [0.4.0](https://gitlab.com/marmyshev/edt-editing/-/packages/10924902) | 2020.5 - 2022.2 |
 | 0.3.0 | 2020.5+ и новее... |
