@@ -390,8 +390,12 @@ public class ProjectPathEditingService
             for (int i = 0; i < segments.length; i++)
             {
                 String segment = segments[i];
+                if (i > 0)
+                {
+                    sb.append('.');
+                }
                 sb.append(preffix);
-                sb.append("."); //$NON-NLS-1$
+                sb.append('.');
                 sb.append(segment);
             }
 
