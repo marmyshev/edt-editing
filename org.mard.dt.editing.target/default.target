@@ -13,15 +13,12 @@
 
 <!-- EDT -->
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="com._1c.g5.v8.dt.platform.support_v8.3.19.feature.feature.group" version="0.0.0"/>
-<repository location="https://edt.1c.ru/downloads/releases/ruby/2024.1/"/>
-</location>
-
-<!-- EDT -->
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="com._1c.g5.v8.dt.rcp" version="0.0.0"/>
 <unit id="com._1c.g5.v8.dt.thirdparty.feature.group" version="0.0.0"/>
-<repository location="https://edt.1c.ru/downloads/releases/ruby/2024.1/"/>
+<unit id="com._1c.g5.v8.dt.feature.feature.group" version="0.0.0"/>
+<unit id="com._1c.g5.v8.dt.platform.support_v8.3.19.feature.feature.group" version="0.0.0"/>
+<repository id="dt_repository" location="https://edt.1c.ru/downloads/releases/ruby/2026.2/"/>
+
 </location>
 
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
@@ -39,10 +36,15 @@
 <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20211213173813/repository/"/>
 </location>
 
-<!-- ORBIT 4.37.0 -->
+<!-- ORBIT 4.38.0 -->
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<repository id="artifactory" location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.37.0/"/>
-    <unit id="org.eclipse.orbit.maven.org.apache.batik.feature.group" version="4.37.0"/>
+<repository id="artifactory" location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/4.38.0/"/>
+    <unit id="org.eclipse.orbit.maven.org.apache.batik.feature.group" version="4.38.0"/>
+    <unit id="jakarta.xml.bind-api" version="2.3.3"/>
+    <unit id="jakarta.activation-api" version="1.2.2"/>
+    <unit id="jakarta.activation-api.source" version="1.2.2"/>
+    <unit id="jakarta.inject.jakarta.inject-api" version="1.0.5"/>
+    <unit id="jakarta.inject.jakarta.inject-api.source" version="1.0.5"/>
 </location>
 
 <!-- Eclipse -->
@@ -51,11 +53,13 @@
 <unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.orbit.xml-apis-ext" version="0.0.0"/>
-<unit id="org.eclipse.ecf.filetransfer.httpclientjava.feature.feature.group" version="0.0.0"/>
+<unit id="org.osgi.service.http.whiteboard" version="0.0.0"/>
+<unit id="org.eclipse.equinox.http.service.api" version="0.0.0"/>
 <unit id="org.jcodings" version="0.0.0"/>
 <unit id="org.joni" version="0.0.0"/>
-<repository id="eclipse_repository" location="https://download.eclipse.org/releases/2023-12/"/>
+<repository id="eclipse_repository" location="https://download.eclipse.org/releases/2025-12/"/>
 </location>
+
 
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.brainwy.liclipsetext.feature.feature.group" version="0.0.0"/>
